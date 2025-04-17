@@ -1,0 +1,127 @@
+.sites {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sites-header {
+  margin-bottom: 2rem;
+}
+
+.sites-header h1 {
+  font-size: 2rem;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+}
+
+.filter-options {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filter-options button {
+  padding: 0.5rem 1.5rem;
+  border: 2px solid #4f46e5;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: #4f46e5;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-options button:hover {
+  background: #4f46e5;
+  color: white;
+}
+
+.filter-options button.active {
+  background: #4f46e5;
+  color: white;
+}
+
+.properties-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.property-card {
+  background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.property-card:hover {
+  transform: translateY(-5px);
+}
+
+.property-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.property-details {
+  padding: 1.5rem;
+}
+
+.property-details h3 {
+  font-size: 1.25rem;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.address {
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.features {
+  display: flex;
+  gap: 1rem;
+  color: #4b5563;
+  margin-bottom: 1rem;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #4f46e5;
+}
+
+.contact-btn {
+  padding: 0.5rem 1rem;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.contact-btn:hover {
+  background-color: #4338ca;
+}
+
+@media (max-width: 768px) {
+  .sites {
+    padding: 1rem;
+  }
+  
+  .filter-options {
+    gap: 0.5rem;
+  }
+  
+  .properties-grid {
+    grid-template-columns: 1fr;
+  }
+}
