@@ -11,24 +11,27 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.example.Property.model.User;
+
 @Service
 public class JWTService {
 
     public final String SEC_KEY = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890MKDJSHIEUFBEICBWIEOWDWUU";
     public final SecretKey key = Keys.hmacShaKeyFor(SEC_KEY.getBytes());
 
-    public String generateToken(String email)
-    {
-        Map<String, String> data = new HashMap<String, String>();
-        data.put("email", email);
-
+    public String generateToken(User user) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("id", user.getId());
+        claims.put("email", user.getEmail());
+    
         return Jwts.builder()
-                .setClaims(data)
+                .setClaims(claims)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + 3600000))
+                .setExpiration(new Date(System.currentTimeMillis() + 3600000)) // 1 hour
                 .signWith(key)
                 .compact();
     }
+    
 
     public String validateToken(String token) {
         try {

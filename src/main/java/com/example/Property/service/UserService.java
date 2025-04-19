@@ -23,13 +23,19 @@ public class UserService {
     }
 
     public String ValidateUser(@RequestParam("email") String email, @RequestParam("password") String password) {
-        if(ur.validateCredentials(email, password) >0)
-        {
-            String token = JM.generateToken(email);
-            return token;
+        if(ur.validateCredentials(email, password) > 0) {
+            User user = ur.findByEmailAndPassword(email, password);
+            if(user != null) {
+                String token = JM.generateToken(user);
+                return token;
+            }
         }
         return "Invalid Credentials";
-       
+    }
+    
+
+    public User getUserById(int id) {
+        return ur.findById(id).orElse(null);
     }
 
 }

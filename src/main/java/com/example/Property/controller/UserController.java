@@ -2,6 +2,8 @@ package com.example.Property.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +28,11 @@ public class UserController {
     @PostMapping("/signin")
     public String signin(@RequestBody User user) {
         return us.ValidateUser(user.getEmail(), user.getPassword());
-
     }
 
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable int id) {
+       return us.getUserById(id); 
+    }
     
 }
