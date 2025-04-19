@@ -99,9 +99,10 @@ function Settings() {
           </button>
         </div>
         <div className="setting-item">
-          <button className="delete-account-btn">
-            Delete Account
-          </button>
+        <button className="delete-account-btn" onClick={() => {
+        localStorage.removeItem('jwtToken');
+        window.location.href = '/login';
+      }}>Logout</button>
         </div>
       </div>
     </div>

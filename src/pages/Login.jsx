@@ -1,0 +1,56 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+function Login() {
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const BaseURL = "http://localhost:8080"
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+    try {
+      const res = await fetch(BaseURL+"/user/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.text();
+      if (res.ok && data.toLowerCase().indexOf("invalid") === -1) {
+        localStorage.setItem("jwtToken", data);
+        setSuccess("Login successful! Redirecting to profile...");
+        setTimeout(() => navigate("/profile"), 1500);
+      } else {
+        setError(data || "Login failed");
+      }
+    } catch (err) {
+        console.error(err); // log the error for debugging purpose
+      setError("Network error");
+    }
+  };
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
+        <h2 className="text-2xl font-bold mb-6 text-center text-indigo-700">Login</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input name="email" type="email" placeholder="Email" value={form.email} onChange={handleChange} required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+          <input name="password" type="password" placeholder="Password" value={form.password} onChange={handleChange} required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+          <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-lg transition-colors">Login</button>
+        </form>
+        {error && <div className="mt-4 text-red-600 text-center font-medium">{error}</div>}
+        {success && <div className="mt-4 text-green-600 text-center font-medium">{success}</div>}
+        <p className="mt-6 text-center text-gray-600">Don\'t have an account? <a href="/signup" className="text-indigo-600 hover:underline">Sign Up</a></p>
+      </div>
+    </div>
+  );
+}
+
+export default Login;
