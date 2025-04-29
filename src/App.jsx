@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Home from './pages/Home';
+import Home from './components/landing/Home';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Signup from './pages/Signup';
@@ -12,7 +12,7 @@ import Properties from './pages/Properties';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="min-h-screen bg-gray-900 text-white">
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />

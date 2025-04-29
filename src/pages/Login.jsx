@@ -37,17 +37,17 @@ function Login() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
-        <h2 className="text-2xl font-bold mb-6 text-center text-indigo-700">Login</h2>
+    <div className="flex min-h-screen items-center justify-center bg-gray-900 text-gray-100">
+      <div className="w-full max-w-md bg-gray-800 rounded-xl shadow-lg p-8">
+        <h2 className="text-2xl font-bold mb-6 text-center text-white">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <input name="email" type="email" placeholder="Email" value={form.email} onChange={handleChange} required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400" />
-          <input name="password" type="password" placeholder="Password" value={form.password} onChange={handleChange} required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+          <input name="email" type="email" placeholder="Email" value={form.email} onChange={handleChange} required className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-gray-700 text-white" />
+          <input name="password" type="password" placeholder="Password" value={form.password} onChange={handleChange} required className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-gray-700 text-white" />
           <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-lg transition-colors">Login</button>
         </form>
-        {error && <div className="mt-4 text-red-600 text-center font-medium">{error}</div>}
-        {success && <div className="mt-4 text-green-600 text-center font-medium">{success}</div>}
-        <p className="mt-6 text-center text-gray-600">Don\'t have an account? <a href="/signup" className="text-indigo-600 hover:underline">Sign Up</a></p>
+        {error && <div className="mt-4 text-red-400 text-center font-medium">{error}</div>}
+        {success && <div className="mt-4 text-green-400 text-center font-medium">{success}</div>}
+        <p className="mt-6 text-center text-gray-300">Don\'t have an account? <a href="/signup" className="text-indigo-400 hover:underline">Sign Up</a></p>
       </div>
     </div>
   );
