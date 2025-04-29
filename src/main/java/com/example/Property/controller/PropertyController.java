@@ -1,6 +1,8 @@
 package com.example.Property.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +26,15 @@ public class PropertyController {
     private PropertyService Ps;
 
     @PostMapping("/post")
-    public ResponseEntity<?> saveProperty(@RequestBody Property property) {
-        Ps.saveProperty(property);
-        return ResponseEntity.ok("Property saved successfully");
+    public ResponseEntity<Map<String, Object>> saveProperty(@RequestBody Property property) {
+        Property saved = Ps.saveProperty(property); // Call the service correctly
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Property saved successfully!");
+        response.put("property", saved);
+        return ResponseEntity.ok(response);
     }
+    
+    
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getPropertyById(@PathVariable Long id) {

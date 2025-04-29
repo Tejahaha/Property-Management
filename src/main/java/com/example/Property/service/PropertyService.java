@@ -14,9 +14,9 @@ public class PropertyService {
     @Autowired
     private PropertyRepository Pr;
 
-    public String saveProperty(Property property) {
+    public Property saveProperty(Property property) {
         Pr.save(property);
-        return "Property saved successfully";
+        return property;
     }
 
     public Property getPropertyById(Long id) {
