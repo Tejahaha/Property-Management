@@ -26,4 +26,8 @@ public class PropertyService {
     public List<Property> getPropertiesByUserId(Long userId) {
         return Pr.findByUserId(userId);
     }
+
+    public List<Property> getAllProperties() {
+        return Pr.findAll();
+    }
 }

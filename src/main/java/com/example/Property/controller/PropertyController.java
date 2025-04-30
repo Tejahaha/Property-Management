@@ -34,8 +34,15 @@ public class PropertyController {
         return ResponseEntity.ok(response);
     }
     
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllProperties() {
+        List<Property> properties = Ps.getAllProperties();
+        if(properties.isEmpty()){
+            return ResponseEntity.status(404).body("No properties found");
+        }
+        return ResponseEntity.ok(properties);
+    }
     
-
     @GetMapping("/{id}")
     public ResponseEntity<?> getPropertyById(@PathVariable Long id) {
         Property property = Ps.getPropertyById(id);
