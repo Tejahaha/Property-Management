@@ -1,11 +1,15 @@
 .navbar {
   background-color: transparent;
   transition: all 0.3s ease;
-  padding: 1rem 0;
+  padding: 1rem 0; /* 1rem top and bottom = 16px x 2 = 32px height approx */
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   z-index: 1000;
+  height: 64px; /* Add this for consistency */
 }
+
 
 .navbar.scrolled {
   background-color: rgba(255, 255, 255, 0.1);

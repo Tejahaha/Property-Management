@@ -1,95 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
 import './Settings.css';
 
 function Settings() {
-  const [settings, setSettings] = useState({
-    notifications: true,
-    emailUpdates: true,
-    darkMode: false,
-    language: 'english'
-  });
+  const [userId, setUserId] = useState(null);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const handleToggle = (setting) => {
-    setSettings(prev => ({
-      ...prev,
-      [setting]: !prev[setting]
-    }));
-  };
+  useEffect(() => {
+    const token = localStorage.getItem("jwtToken");
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        setUserId(decoded.id);
+      } catch (err) {
+        console.error(err);
+        setError("Invalid token");
+        setLoading(false);
+      }
+    } else {
+      setError("No token found");
+      setLoading(false);
+    }
+  }, []);
 
-  const handleLanguageChange = (e) => {
-    setSettings(prev => ({
-      ...prev,
-      language: e.target.value
-    }));
-  };
+  useEffect(() => {
+    if (!userId) return;
+    const fetchUser = async () => {
+      try {
+        const res = await fetch(`http://localhost:8080/user/${userId}`);
+        if (!res.ok) throw new Error("Failed to fetch user");
+        const data = await res.json();
+        setUser(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUser();
+  }, [userId]);
+
+  if (loading)
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+        <span className="text-lg text-indigo-600 font-semibold">Loading...</span>
+      </div>
+    );
+  if (error)
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+        <span className="text-lg text-red-600 font-semibold">Error: {error}</span>
+      </div>
+    );
+  if (!user)
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+        <span className="text-lg text-gray-600 font-semibold">No user found.</span>
+      </div>
+    );
 
   return (
     <div className="settings">
       <h1>Settings</h1>
-      
-      <div className="settings-section">
-        <h2>Preferences</h2>
-        <div className="setting-item">
-          <div className="setting-info">
-            <h3>Notifications</h3>
-            <p>Receive push notifications for updates</p>
-          </div>
-          <label className="toggle">
-            <input
-              type="checkbox"
-              checked={settings.notifications}
-              onChange={() => handleToggle('notifications')}
-            />
-            <span className="slider"></span>
-          </label>
-        </div>
-
-        <div className="setting-item">
-          <div className="setting-info">
-            <h3>Email Updates</h3>
-            <p>Receive email notifications</p>
-          </div>
-          <label className="toggle">
-            <input
-              type="checkbox"
-              checked={settings.emailUpdates}
-              onChange={() => handleToggle('emailUpdates')}
-            />
-            <span className="slider"></span>
-          </label>
-        </div>
-
-        <div className="setting-item">
-          <div className="setting-info">
-            <h3>Dark Mode</h3>
-            <p>Switch to dark theme</p>
-          </div>
-          <label className="toggle">
-            <input
-              type="checkbox"
-              checked={settings.darkMode}
-              onChange={() => handleToggle('darkMode')}
-            />
-            <span className="slider"></span>
-          </label>
-        </div>
-
-        <div className="setting-item">
-          <div className="setting-info">
-            <h3>Language</h3>
-            <p>Choose your preferred language</p>
-          </div>
-          <select
-            value={settings.language}
-            onChange={handleLanguageChange}
-            className="language-select"
-          >
-            <option value="english">English</option>
-            <option value="spanish">Spanish</option>
-            <option value="french">French</option>
-          </select>
-        </div>
-      </div>
 
       <div className="settings-section">
         <h2>Account</h2>
@@ -99,10 +73,57 @@ function Settings() {
           </button>
         </div>
         <div className="setting-item">
-        <button className="delete-account-btn" onClick={() => {
-        localStorage.removeItem('jwtToken');
-        window.location.href = '/login';
-      }}>Logout</button>
+          <button
+            className="delete-account-btn"
+            onClick={() => {
+              localStorage.removeItem('jwtToken');
+              window.location.href = '/login';
+            }}
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+
+      <div className="settings-section">
+        <h2>Profile</h2>
+        <div className="flex items-center justify-center">
+          <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 flex flex-col items-center">
+            <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-indigo-400 to-blue-400 flex items-center justify-center mb-4 shadow-md">
+              <span className="text-4xl text-white font-bold uppercase">
+                {user.name?.charAt(0)}
+              </span>
+            </div>
+            <h1 className="text-2xl font-bold text-indigo-700 mb-1">{user.name}</h1>
+            <div className="w-full space-y-3">
+              <div className="flex items-center gap-2 text-gray-700">
+                <svg
+                  className="w-5 h-5 text-indigo-400"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 12a4 4 0 01-8 0 4 4 0 018 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 14v7m0 0H7m5 0h5" />
+                </svg>
+                <span className="font-semibold">Email:</span> {user.email}
+              </div>
+              <div className="flex items-center gap-2 text-gray-700">
+                <svg
+                  className="w-5 h-5 text-indigo-400"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 3v4M8 3v4m-5 4h18" />
+                </svg>
+                <span className="font-semibold">Phone:</span> {user.phone}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

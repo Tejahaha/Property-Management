@@ -1,5 +1,5 @@
 .home {
-  padding: 2rem;
+padding-top: 80px;
 }
 
 .hero {
@@ -73,7 +73,7 @@
 .featured h2 {
   font-size: 2rem;
   margin-bottom: 2rem;
-  color: #1f2937;
+  color: white;
 }
 
 .property-grid {

@@ -3,6 +3,8 @@ import './Home.css';
 import FadeContent from '../../blocks/Animations/FadeContent/FadeContent.jsx'
 import SplitText from '../../blocks/TextAnimations/SplitText/SplitText.jsx';
 import CircularGallery from '../../blocks/Components/CircularGallery/CircularGallery.jsx'
+// import Waves from '../../blocks/Backgrounds/Waves/Waves.jsx';
+import Orb from '../../blocks/Backgrounds/Orb/Orb.jsx';
 function Home() {
   const featuredProperties = [
     {
@@ -30,8 +32,16 @@ function Home() {
 
   return (
     <>
+      <div style={{ width: '100vw', height: '100vh', position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
+        <Orb 
+          hoverIntensity={0.5} 
+          rotateOnHover={true} 
+          hue={0} 
+          forceHoverState={false} 
+        />
+      </div>
       <FadeContent blur={true} duration={1000} easing="ease-in-out" initialOpacity={0}>
-        <div className="home">
+        <div className="home" style={{position: 'relative', zIndex: 1}}>
         <section className="hero">
         <h1>
             <SplitText

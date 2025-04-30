@@ -20,7 +20,7 @@ function Navbar() {
         <Link to="/" className="navbar-brand">Property Management</Link>
         <div className="navbar-links">
           <Link to="/sites" className="nav-link">Sites</Link>
-          <Link to="/profile" className="nav-link">Profile</Link>
+          <Link to="/all-properties" className="nav-link">All Properties</Link>
           <Link to="/settings" className="nav-link">Settings</Link>
           {!jwtToken && <Link to="/login" className="nav-link hover:underline transition duration-300">Login</Link>}
           {!jwtToken && <Link to="/signup" className="nav-link hover:underline transition duration-300">Sign Up</Link>}
