@@ -19,6 +19,24 @@ public class PropertyService {
         return property;
     }
 
+    public Property updateProperty(Long id, Property property) {
+        Property existing = Pr.findById(id).orElse(null);
+        if(existing == null) return null;
+        existing.setTitle(property.getTitle());
+        existing.setDescription(property.getDescription());
+        existing.setAddress(property.getAddress());
+        existing.setPrice(property.getPrice());
+        existing.setImagePath(property.getImagePath());
+        Pr.save(existing);
+        return existing;
+    }
+
+    public boolean deleteProperty(Long id) {
+        if(!Pr.existsById(id)) return false;
+        Pr.deleteById(id);
+        return true;
+    }
+
     public Property getPropertyById(Long id) {
         return Pr.findById(id).orElse(null);
     }

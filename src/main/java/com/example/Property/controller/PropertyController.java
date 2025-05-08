@@ -33,6 +33,29 @@ public class PropertyController {
         response.put("property", saved);
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/update/{id}")
+    public ResponseEntity<?> updateProperty(@PathVariable Long id, @RequestBody Property property) {
+        Property updated = Ps.updateProperty(id, property);
+        if(updated == null) {
+            return ResponseEntity.status(404).body("Property not found");
+        }
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Property updated successfully!");
+        response.put("property", updated);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/delete/{id}")
+    public ResponseEntity<?> deleteProperty(@PathVariable Long id) {
+        boolean deleted = Ps.deleteProperty(id);
+        if(!deleted) {
+            return ResponseEntity.status(404).body("Property not found");
+        }
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Property deleted successfully!");
+        return ResponseEntity.ok(response);
+    }
     
     @GetMapping("/all")
     public ResponseEntity<?> getAllProperties() {
